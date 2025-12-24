@@ -58,3 +58,105 @@ List<integer> getTweetCountsPerFrequency(String freq, String tweetName, int star
 freq 是 “minute” 、 “hour” 或 “day” 中的一个，分别表示 每分钟 、 每小时 或 每一天 的频率。
 
 
+
+
+
+
+## 18. 4Sum(四数之和)
+### 解题思路
+#### 排序 + 双指针
+本题是 15 题（三数之和）的扩展，核心思路是「降维」—— 通过两层循环固定前两个数，将四数之和转化为「两数之和」问题，再用双指针找后两个数，整体逻辑如下
+1. 排序预处理
+2. 固定第一个数
+3. 固定第二个数
+4. 双指针找出后两个数
+5. 剪枝优化
+
+```golang
+
+package main
+
+import (
+    "fmt"
+    "sort"
+)
+
+func fourSum(nums []int, target int) [][]int {
+    var result [][]int
+    n := len(nums)
+
+    if n < 4 {
+        return result
+    }
+
+    // step 1:
+    sort.Ints(nums)
+
+    // step 2:
+    for i:=0; i<n-3; i++ {
+        // 剪枝优化1, 跳过重复的第一个数
+        if i > 0 && nums[i] == nums[i-1] {
+            continue
+        }
+
+        // 剪枝优化， 如果最小的四个相加大于target，直接break
+        if nums[i] + nums[i+1] + nums[i+2] + nums[i+3] > target {
+            break
+        }
+
+        // 剪枝优化， 如果当前最大的四个小于target，就跳过
+        if nums[i] + nums[n-3] + nums[n-2] + nums[n-1] < target {
+            continue
+        }
+
+        // step3 固定第二个数
+        for j := i+1; j < n-2; j++ {
+            // 剪枝优化， 跳过重复的第二个数
+            if j > i+1 && nums[j] == nums[j-1] {
+                continue
+            }
+
+            // 剪枝2， 当前最小的超过target，break第二层循环
+            if nums[i] + nums[j] + nums[j+1] + nums[j+2] > target {
+                break
+            }
+
+            // 剪枝3， 当前最大的不足target， 跳过循环
+            if nums[i] + nums[j] + nums[n-1] + nums[n-2] < target {
+                continue
+            }
+            
+            // step4, 双指针找到后两个数
+            remain := target - nums[i] - nums[j]
+            left, right := j+1, n-1
+            for left < right {
+                sum := nums[left] + nums[right]
+
+                if sum == remain {
+                    result = append(result, []int{nums[i], nums[j], nums[left], nums[right]})
+
+
+                    for left < right && nums[left] == nums[left+1] {
+                        left++
+                    }
+
+                    for left < right && nums[right] == nums[right-1] {
+                        right--
+                    }
+
+                    left++
+                    right--
+                } else if sum < remain {
+                    
+                    left++
+                } else {
+                    right--
+                }
+            }
+        }
+    }
+
+    return result
+}
+
+```
