@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+    <channel>
+        <title>JavaScript on Heyuuuu</title>
+        <link>http://localhost:1313/tags/javascript/</link>
+        <description>Recent content in JavaScript on Heyuuuu</description>
+        <generator>Hugo -- gohugo.io</generator>
+        <language>zh-cn</language>
+        <copyright>© 2024-2025 Heyuuuu</copyright>
+        <lastBuildDate>Wed, 25 Dec 2024 15:30:00 +0800</lastBuildDate><atom:link href="http://localhost:1313/tags/javascript/index.xml" rel="self" type="application/rss+xml" /><item>
+        <title>Stroop 效应打字游戏</title>
+        <link>http://localhost:1313/posts/typing-stroop-game/</link>
+        <pubDate>Wed, 25 Dec 2024 15:30:00 +0800</pubDate>
+        
+        <guid>http://localhost:1313/posts/typing-stroop-game/</guid>
+        <description>&lt;p&gt;挑战你的大脑！Stroop 效应是心理学中的经典现象，当颜色和文字不匹配时，你的反应会变慢。&lt;/p&gt;
+&lt;h2 id=&#34;游戏说明&#34;&gt;游戏说明
+&lt;/h2&gt;&lt;p&gt;&lt;strong&gt;三种模式：&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;🟢 &lt;strong&gt;简单模式&lt;/strong&gt;：颜色和文字一致，输入文字内容&lt;/li&gt;
+&lt;li&gt;🔴 &lt;strong&gt;挑战模式&lt;/strong&gt;：颜色和文字不一致，输入显示的颜色（挑战你的注意力！）&lt;/li&gt;
+&lt;li&gt;🎲 &lt;strong&gt;随机模式&lt;/strong&gt;：随机混合两种模式&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;strong&gt;难度选择：&lt;/strong&gt;&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;普通&lt;/strong&gt;：4 种颜色&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;困难&lt;/strong&gt;：6 种颜色&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;极难&lt;/strong&gt;：8 种颜色&lt;/li&gt;
+&lt;/ul&gt;
+&lt;style&gt;
+.stroop-container { max-width: 700px; margin: 30px auto; padding: 25px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.3); }
+.stroop-content { background: white; border-radius: 15px; padding: 25px; }
+.stroop-title { text-align: center; color: #667eea; font-size: 2em; margin-bottom: 20px; }
+.mode-select, .difficulty-select { text-align: center; margin: 20px 0; }
+.mode-btn, .difficulty-btn { padding: 12px 24px; margin: 5px; font-size: 1em; border: none; border-radius: 8px; cursor: pointer; transition: all 0.3s; font-weight: bold; }
+.mode-btn { background: #e0e0e0; color: #333; }
+.mode-btn.active { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; transform: translateY(-2px); box-shadow: 0 4px 12px rgba(102,126,234,0.4); }
+.difficulty-btn { background: #f0f0f0; color: #555; font-size: 0.9em; }
+.difficulty-btn.active { background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; }
+.game-info { display: flex; justify-content: space-around; margin: 15px 0; padding: 15px; background: #f8f9fa; border-radius: 10px; }
+.info-item { text-align: center; }
+.info-label { color: #888; font-size: 0.85em; }
+.info-value { font-weight: bold; color: #667eea; font-size: 1.3em; }
+.game-area { text-align: center; padding: 50px 20px; background: #000; border-radius: 15px; margin: 20px 0; min-height: 180px; display: flex; flex-direction: column; justify-content: center; }
+.mode-hint { color: #888; font-size: 0.9em; margin-bottom: 15px; }
+.color-word { font-size: 3.5em; font-weight: bold; margin: 20px 0; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+.answer-input { width: 100%; max-width: 350px; padding: 15px; font-size: 1.2em; border: 3px solid #667eea; border-radius: 10px; text-align: center; outline: none; transition: all 0.3s; }
+.answer-input:focus { border-color: #764ba2; box-shadow: 0 0 15px rgba(102,126,234,0.3); }
+.feedback { margin-top: 15px; font-size: 1.2em; font-weight: bold; min-height: 30px; }
+.feedback.correct { color: #28a745; }
+.feedback.wrong { color: #dc3545; }
+.control-btns { text-align: center; margin-top: 15px; }
+.control-btn { padding: 10px 20px; margin: 5px; font-size: 0.95em; border: none; border-radius: 8px; cursor: pointer; background: #6c757d; color: white; transition: all 0.3s; }
+.control-btn:hover { background: #5a6268; transform: translateY(-1px); }
+.stats-modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 1000; align-items: center; justify-content: center; }
+.stats-modal.show { display: flex; }
+.stats-content { background: white; padding: 30px; border-radius: 15px; max-width: 500px; width: 90%; }
+.stats-title { text-align: center; color: #667eea; font-size: 1.8em; margin-bottom: 20px; }
+.stats-table { width: 100%; margin: 20px 0; }
+.stats-table td { padding: 12px; border-bottom: 1px solid #eee; }
+.stats-table .label { text-align: right; color: #666; font-weight: bold; width: 50%; }
+.stats-table .value { text-align: left; color: #667eea; font-size: 1.2em; font-weight: bold; }
+.stats-comment { text-align: center; margin: 20px 0; padding: 15px; background: #f8f9fa; border-radius: 10px; font-size: 1.1em; font-weight: bold; }
+.btn-restart { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 12px 30px; font-size: 1.1em; border: none; border-radius: 8px; cursor: pointer; transition: all 0.3s; }
+.btn-restart:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(102,126,234,0.4); }
+&lt;/style&gt;
+&lt;div class=&#34;stroop-container&#34;&gt;
+  &lt;div class=&#34;stroop-content&#34;&gt;
+    &lt;h1 class=&#34;stroop-title&#34;&gt;🎮 Stroop 效应游戏&lt;/h1&gt;
+&lt;pre&gt;&lt;code&gt;&amp;lt;div class=&amp;quot;mode-select&amp;quot;&amp;gt;
+  &amp;lt;button class=&amp;quot;mode-btn active&amp;quot; onclick=&amp;quot;selectMode(1)&amp;quot; data-mode=&amp;quot;1&amp;quot;&amp;gt;😊 简单模式&amp;lt;/button&amp;gt;
+  &amp;lt;button class=&amp;quot;mode-btn&amp;quot; onclick=&amp;quot;selectMode(2)&amp;quot; data-mode=&amp;quot;2&amp;quot;&amp;gt;🔥 挑战模式&amp;lt;/button&amp;gt;
+  &amp;lt;button class=&amp;quot;mode-btn&amp;quot; onclick=&amp;quot;selectMode(3)&amp;quot; data-mode=&amp;quot;3&amp;quot;&amp;gt;🎲 随机模式&amp;lt;/button&amp;gt;
+&amp;lt;/div&amp;gt;
+
+&amp;lt;div class=&amp;quot;difficulty-select&amp;quot;&amp;gt;
+  &amp;lt;span style=&amp;quot;color: #666; margin-right: 10px;&amp;quot;&amp;gt;难度：&amp;lt;/span&amp;gt;
+  &amp;lt;button class=&amp;quot;difficulty-btn active&amp;quot; onclick=&amp;quot;selectDifficulty(&#39;easy&#39;)&amp;quot; data-diff=&amp;quot;easy&amp;quot;&amp;gt;普通&amp;lt;/button&amp;gt;
+  &amp;lt;button class=&amp;quot;difficulty-btn&amp;quot; onclick=&amp;quot;selectDifficulty(&#39;hard&#39;)&amp;quot; data-diff=&amp;quot;hard&amp;quot;&amp;gt;困难&amp;lt;/button&amp;gt;
+  &amp;lt;button class=&amp;quot;difficulty-btn&amp;quot; onclick=&amp;quot;selectDifficulty(&#39;extreme&#39;)&amp;quot; data-diff=&amp;quot;extreme&amp;quot;&amp;gt;极难&amp;lt;/button&amp;gt;
+&amp;lt;/div&amp;gt;
+
+&amp;lt;div class=&amp;quot;game-info&amp;quot;&amp;gt;
+  &amp;lt;div class=&amp;quot;info-item&amp;quot;&amp;gt;
+    &amp;lt;div class=&amp;quot;info-label&amp;quot;&amp;gt;得分&amp;lt;/div&amp;gt;
+    &amp;lt;div class=&amp;quot;info-value&amp;quot;&amp;gt;&amp;lt;span id=&amp;quot;score&amp;quot;&amp;gt;0&amp;lt;/span&amp;gt;/&amp;lt;span id=&amp;quot;total&amp;quot;&amp;gt;0&amp;lt;/span&amp;gt;&amp;lt;/div&amp;gt;
+  &amp;lt;/div&amp;gt;
+  &amp;lt;div class=&amp;quot;info-item&amp;quot;&amp;gt;
+    &amp;lt;div class=&amp;quot;info-label&amp;quot;&amp;gt;准确率&amp;lt;/div&amp;gt;
+    &amp;lt;div class=&amp;quot;info-value&amp;quot;&amp;gt;&amp;lt;span id=&amp;quot;accuracy&amp;quot;&amp;gt;0&amp;lt;/span&amp;gt;%&amp;lt;/div&amp;gt;
+  &amp;lt;/div&amp;gt;
+  &amp;lt;div class=&amp;quot;info-item&amp;quot;&amp;gt;
+    &amp;lt;div class=&amp;quot;info-label&amp;quot;&amp;gt;连对&amp;lt;/div&amp;gt;
+    &amp;lt;div class=&amp;quot;info-value&amp;quot;&amp;gt;&amp;lt;span id=&amp;quot;streak&amp;quot;&amp;gt;0&amp;lt;/span&amp;gt;&amp;lt;/div&amp;gt;
+  &amp;lt;/div&amp;gt;
+&amp;lt;/div&amp;gt;
+
+&amp;lt;div class=&amp;quot;game-area&amp;quot;&amp;gt;
+  &amp;lt;div class=&amp;quot;mode-hint&amp;quot; id=&amp;quot;modeHint&amp;quot;&amp;gt;输入文字内容（英文）&amp;lt;/div&amp;gt;
+  &amp;lt;div class=&amp;quot;color-word&amp;quot; id=&amp;quot;colorWord&amp;quot;&amp;gt;红色&amp;lt;/div&amp;gt;
+&amp;lt;/div&amp;gt;
+
+&amp;lt;div style=&amp;quot;text-align: center;&amp;quot;&amp;gt;
+  &amp;lt;input type=&amp;quot;text&amp;quot; class=&amp;quot;answer-input&amp;quot; id=&amp;quot;answerInput&amp;quot; placeholder=&amp;quot;输入答案后按 Enter&amp;quot; autocomplete=&amp;quot;off&amp;quot;&amp;gt;
+  &amp;lt;div class=&amp;quot;feedback&amp;quot; id=&amp;quot;feedback&amp;quot;&amp;gt;&amp;lt;/div&amp;gt;
+&amp;lt;/div&amp;gt;
+
+&amp;lt;div class=&amp;quot;control-btns&amp;quot;&amp;gt;
+  &amp;lt;button class=&amp;quot;control-btn&amp;quot; onclick=&amp;quot;showStats()&amp;quot;&amp;gt;查看统计&amp;lt;/button&amp;gt;
+  &amp;lt;button class=&amp;quot;control-btn&amp;quot; onclick=&amp;quot;resetGame()&amp;quot;&amp;gt;重新开始&amp;lt;/button&amp;gt;
+&amp;lt;/div&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;div class=&#34;stats-modal&#34; id=&#34;statsModal&#34; onclick=&#34;hideStats(event)&#34;&gt;
+  &lt;div class=&#34;stats-content&#34; onclick=&#34;event.stopPropagation()&#34;&gt;
+    &lt;h2 class=&#34;stats-title&#34;&gt;📊 游戏统计&lt;/h2&gt;
+    &lt;table class=&#34;stats-table&#34;&gt;
+      &lt;tr&gt;&lt;td class=&#34;label&#34;&gt;总题数：&lt;/td&gt;&lt;td class=&#34;value&#34; id=&#34;finalTotal&#34;&gt;0&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td class=&#34;label&#34;&gt;正确数：&lt;/td&gt;&lt;td class=&#34;value&#34; id=&#34;finalScore&#34;&gt;0&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td class=&#34;label&#34;&gt;准确率：&lt;/td&gt;&lt;td class=&#34;value&#34; id=&#34;finalAccuracy&#34;&gt;0%&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td class=&#34;label&#34;&gt;最高连对：&lt;/td&gt;&lt;td class=&#34;value&#34; id=&#34;maxStreak&#34;&gt;0&lt;/td&gt;&lt;/tr&gt;
+      &lt;tr&gt;&lt;td class=&#34;label&#34;&gt;平均用时：&lt;/td&gt;&lt;td class=&#34;value&#34; id=&#34;avgTime&#34;&gt;0s&lt;/td&gt;&lt;/tr&gt;
+    &lt;/table&gt;
+    &lt;div class=&#34;stats-comment&#34; id=&#34;comment&#34;&gt;&lt;/div&gt;
+    &lt;div style=&#34;text-align: center;&#34;&gt;
+      &lt;button class=&#34;btn-restart&#34; onclick=&#34;hideStats()&#34;&gt;继续游戏&lt;/button&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+&lt;script&gt;
+const COLOR_SETS = {
+  easy: {
+    red: &#39;红色&#39;, green: &#39;绿色&#39;, blue: &#39;蓝色&#39;, yellow: &#39;黄色&#39;
+  },
+  hard: {
+    red: &#39;红色&#39;, green: &#39;绿色&#39;, blue: &#39;蓝色&#39;, yellow: &#39;黄色&#39;, magenta: &#39;紫色&#39;, cyan: &#39;青色&#39;
+  },
+  extreme: {
+    red: &#39;红色&#39;, green: &#39;绿色&#39;, blue: &#39;蓝色&#39;, yellow: &#39;黄色&#39;, 
+    magenta: &#39;紫色&#39;, cyan: &#39;青色&#39;, orange: &#39;橙色&#39;, purple: &#39;紫罗兰&#39;
+  }
+};
+
+let gameState = {
+  mode: 1,
+  difficulty: &#39;easy&#39;,
+  score: 0,
+  total: 0,
+  streak: 0,
+  maxStreak: 0,
+  startTime: null,
+  roundStartTime: null,
+  totalResponseTime: 0,
+  currentAnswer: &#39;&#39;
+};
+
+function selectMode(mode) {
+  gameState.mode = mode;
+  document.querySelectorAll(&#39;.mode-btn&#39;).forEach(btn =&gt; {
+    btn.classList.toggle(&#39;active&#39;, btn.dataset.mode == mode);
+  });
+  newQuestion();
+}
+
+function selectDifficulty(diff) {
+  gameState.difficulty = diff;
+  document.querySelectorAll(&#39;.difficulty-btn&#39;).forEach(btn =&gt; {
+    btn.classList.toggle(&#39;active&#39;, btn.dataset.diff == diff);
+  });
+  newQuestion();
+}
+
+function newQuestion() {
+  const colors = COLOR_SETS[gameState.difficulty];
+  const colorKeys = Object.keys(colors);
+  
+  let mode = gameState.mode;
+  if (mode === 3) mode = Math.random() &lt; 0.5 ? 1 : 2;
+  
+  let colorKey, wordKey, hint;
+  
+  if (mode === 1) {
+    colorKey = colorKeys[Math.floor(Math.random() * colorKeys.length)];
+    wordKey = colorKey;
+    hint = &#39;输入文字内容（英文）&#39;;
+    gameState.currentAnswer = colorKey;
+  } else {
+    colorKey = colorKeys[Math.floor(Math.random() * colorKeys.length)];
+    const otherColors = colorKeys.filter(k =&gt; k !== colorKey);
+    wordKey = otherColors[Math.floor(Math.random() * otherColors.length)];
+    hint = &#39;输入文字颜色（英文）&#39;;
+    gameState.currentAnswer = colorKey;
+  }
+  
+  document.getElementById(&#39;modeHint&#39;).textContent = hint;
+  document.getElementById(&#39;colorWord&#39;).textContent = colors[wordKey];
+  document.getElementById(&#39;colorWord&#39;).style.color = colorKey;
+  document.getElementById(&#39;answerInput&#39;).value = &#39;&#39;;
+  document.getElementById(&#39;feedback&#39;).textContent = &#39;&#39;;
+  document.getElementById(&#39;feedback&#39;).className = &#39;feedback&#39;;
+  
+  gameState.roundStartTime = Date.now();
+}
+
+function checkAnswer() {
+  const input = document.getElementById(&#39;answerInput&#39;);
+  const userAnswer = input.value.trim().toLowerCase();
+  
+  if (!userAnswer) return;
+  
+  const responseTime = (Date.now() - gameState.roundStartTime) / 1000;
+  gameState.totalResponseTime += responseTime;
+  gameState.total++;
+  
+  const feedback = document.getElementById(&#39;feedback&#39;);
+  const isCorrect = userAnswer === gameState.currentAnswer.toLowerCase();
+  
+  if (isCorrect) {
+    gameState.score++;
+    gameState.streak++;
+    gameState.maxStreak = Math.max(gameState.maxStreak, gameState.streak);
+    feedback.textContent = `✓ 正确！用时: ${responseTime.toFixed(2)}秒`;
+    feedback.className = &#39;feedback correct&#39;;
+  } else {
+    gameState.streak = 0;
+    feedback.textContent = `✗ 错误！正确答案: ${gameState.currentAnswer}`;
+    feedback.className = &#39;feedback wrong&#39;;
+  }
+  
+  updateStats();
+  setTimeout(newQuestion, 1200);
+}
+
+function updateStats() {
+  document.getElementById(&#39;score&#39;).textContent = gameState.score;
+  document.getElementById(&#39;total&#39;).textContent = gameState.total;
+  document.getElementById(&#39;streak&#39;).textContent = gameState.streak;
+  
+  const accuracy = gameState.total &gt; 0 ? (gameState.score / gameState.total * 100).toFixed(1) : 0;
+  document.getElementById(&#39;accuracy&#39;).textContent = accuracy;
+}
+
+function showStats() {
+  document.getElementById(&#39;finalTotal&#39;).textContent = gameState.total;
+  document.getElementById(&#39;finalScore&#39;).textContent = gameState.score;
+  document.getElementById(&#39;maxStreak&#39;).textContent = gameState.maxStreak;
+  
+  const accuracy = gameState.total &gt; 0 ? (gameState.score / gameState.total * 100).toFixed(1) : 0;
+  document.getElementById(&#39;finalAccuracy&#39;).textContent = accuracy + &#39;%&#39;;
+  
+  const avgTime = gameState.total &gt; 0 ? (gameState.totalResponseTime / gameState.total).toFixed(2) : 0;
+  document.getElementById(&#39;avgTime&#39;).textContent = avgTime + &#39;s&#39;;
+  
+  let comment = &#39;&#39;;
+  if (accuracy &gt;= 90) comment = &#39;🏆 太棒了！你的反应速度惊人！&#39;;
+  else if (accuracy &gt;= 75) comment = &#39;👍 很不错！继续保持！&#39;;
+  else if (accuracy &gt;= 60) comment = &#39;💪 不错的表现，继续加油！&#39;;
+  else comment = &#39;😊 多练习就会进步！&#39;;
+  
+  document.getElementById(&#39;comment&#39;).textContent = comment;
+  document.getElementById(&#39;statsModal&#39;).classList.add(&#39;show&#39;);
+}
+
+function hideStats(e) {
+  if (!e || e.target.id === &#39;statsModal&#39;) {
+    document.getElementById(&#39;statsModal&#39;).classList.remove(&#39;show&#39;);
+  }
+}
+
+function resetGame() {
+  gameState.score = 0;
+  gameState.total = 0;
+  gameState.streak = 0;
+  gameState.maxStreak = 0;
+  gameState.totalResponseTime = 0;
+  updateStats();
+  newQuestion();
+}
+
+document.getElementById(&#39;answerInput&#39;).addEventListener(&#39;keypress&#39;, function(e) {
+  if (e.key === &#39;Enter&#39;) checkAnswer();
+});
+
+newQuestion();
+&lt;/script&gt;</description>
+        </item>
+        
+    </channel>
+</rss>

@@ -2,17 +2,17 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
     <channel>
         <title>Golang on Heyuuuu</title>
-        <link>https://stitchqaq.github.io/categories/golang/</link>
+        <link>http://localhost:1313/categories/golang/</link>
         <description>Recent content in Golang on Heyuuuu</description>
         <generator>Hugo -- gohugo.io</generator>
         <language>zh-cn</language>
         <copyright>© 2024-2025 Heyuuuu</copyright>
-        <lastBuildDate>Wed, 03 Dec 2025 15:30:00 +0800</lastBuildDate><atom:link href="https://stitchqaq.github.io/categories/golang/index.xml" rel="self" type="application/rss+xml" /><item>
+        <lastBuildDate>Wed, 03 Dec 2025 15:30:00 +0800</lastBuildDate><atom:link href="http://localhost:1313/categories/golang/index.xml" rel="self" type="application/rss+xml" /><item>
         <title>Go语言实战笔记</title>
-        <link>https://stitchqaq.github.io/posts/go/</link>
+        <link>http://localhost:1313/posts/go/</link>
         <pubDate>Wed, 03 Dec 2025 15:30:00 +0800</pubDate>
         
-        <guid>https://stitchqaq.github.io/posts/go/</guid>
+        <guid>http://localhost:1313/posts/go/</guid>
         <description>&lt;h2 id=&#34;golang计算一个字符串中不重复的最长的值是多少&#34;&gt;Golang计算一个字符串中不重复的最长的值是多少
 &lt;/h2&gt;&lt;p&gt;解题思路是有一个滑动窗口，首先声明一个map，记录字符和下标，遇到重复的更新下标。 声明一个left， 表示滑动窗口的左边界，如果重复的下标大于左边界，用这个下标更新左边界。然后计算当前下标就是右边界。 左右边界计算最大值，当这个差值比count大，就更新count。最终输出的就是不重复的最大值&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
