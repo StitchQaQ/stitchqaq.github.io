@@ -1,6 +1,6 @@
 +++
 date = '2025-11-04T15:07:11+08:00'
-draft = false
+draft = true
 title = '一些简单的算法记录'
 tags = ["双指针算法", "贪心算法"]
 lastmod = '2025-12-03T18:00:00+08:00'
@@ -276,3 +276,4 @@ activities = [(1, 4), (3, 5), (0, 6), (5, 7), (3, 9), (5, 9), (6, 10), (8, 11), 
 print(max_activities(activities))
 
 ```
+
