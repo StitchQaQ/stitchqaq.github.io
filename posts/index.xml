@@ -1035,7 +1035,12 @@
 &lt;p&gt;⚠️ &lt;strong&gt;记住&lt;/strong&gt;：Go 中一切都是值传递。即使传递指针，传递的也是指针的副本，只不过它们指向同一块内存。&lt;/p&gt;
 &lt;/blockquote&gt;
 &lt;h2 id=&#34;channel&#34;&gt;Channel
-&lt;/h2&gt;&lt;p&gt;在Golang中， channel分有缓存通道和无缓冲通道。&lt;/p&gt;
+&lt;/h2&gt;&lt;blockquote&gt;
+&lt;p&gt;📜 &lt;strong&gt;Go 并发箴言&lt;/strong&gt;：&lt;em&gt;&amp;ldquo;Don&amp;rsquo;t communicate by sharing memory; share memory by communicating.&amp;rdquo;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;不要通过共享内存来通信，而应该通过通信来共享内存。&lt;/strong&gt; —— Rob Pike&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;这是 Go 语言并发编程的核心理念。传统多线程通过共享变量加锁来同步，而 Go 鼓励使用 channel 在 goroutine 间传递数据所有权，让数据在同一时刻只被一个 goroutine 持有，从而天然避免竞态条件。&lt;/p&gt;
+&lt;p&gt;在Golang中， channel分有缓存通道和无缓冲通道。&lt;/p&gt;
 &lt;h3 id=&#34;无缓冲通道&#34;&gt;无缓冲通道
 &lt;/h3&gt;&lt;p&gt;无缓冲通道：在写入channel后，就会阻塞等待接受者读取。Go中有大量依赖阻塞特性的场景，比如&lt;/p&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;div class=&#34;chroma&#34;&gt;
