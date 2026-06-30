@@ -323,6 +323,12 @@ golang中是值传递。 传址也是传递地址的副本。
 
 ## Channel
 
+> 📜 **Go 并发箴言**：*"Don't communicate by sharing memory; share memory by communicating."*
+>
+> **不要通过共享内存来通信，而应该通过通信来共享内存。** —— Rob Pike
+
+这是 Go 语言并发编程的核心理念。传统多线程通过共享变量加锁来同步，而 Go 鼓励使用 channel 在 goroutine 间传递数据所有权，让数据在同一时刻只被一个 goroutine 持有，从而天然避免竞态条件。
+
 在Golang中， channel分有缓存通道和无缓冲通道。 
 
 ### 无缓冲通道
